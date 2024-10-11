@@ -1,5 +1,4 @@
 #include "simple.h"
-#include <cstddef>
 #include <stdlib.h>
 int length(struct node *head) {
   int count = 0;
@@ -11,11 +10,7 @@ int length(struct node *head) {
   return count;
 }
 /*
- Build the list {1, 2, 3} in the heap and store
- its head pointer in a local stack variable.
- Returns the head pointer to the caller.
-
-struct node *BuildOneTwoThree() {
+truct node *BuildOneTwoThree() {
   struct node *head = NULL;
   struct node *second = NULL;
   struct node *third = NULL;
@@ -28,13 +23,20 @@ struct node *BuildOneTwoThree() {
   head->next = second; // note: pointer assignment rule
   second->data = 2;    // setup second node
   second->next = third;
-  third->data = 3; // setup third link
-  third->next = NULL;
-  // At this point, the linked list referenced by "head"
-  // matches the list in the drawing.
-  return head;
-}
+  third->data = 3;
+  third->next = NULL;}
 */
+int Count(struct node *head, int value) {
+  int count = 0;
+  while (head) {
+    if (head->data == value) {
+      count++;
+    }
+    head = head->next;
+  }
+
+  return count;
+}
 struct node *BuildOneTwoThree() {
   struct node *head = malloc(sizeof(struct node));
   head->data = 1;
@@ -45,5 +47,6 @@ struct node *BuildOneTwoThree() {
 
   head->next->next->data = 3;
   head->next->next->next = NULL;
+
   return head;
 }
