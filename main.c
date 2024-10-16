@@ -1,6 +1,6 @@
-#include "simple.h"
+#include "list.h"
 int main() {
   struct node *list = BuildOneTwoThree();
-  int c = Count(list, 2);
+  int c = GetNth(0, 0);
   return 0;
 }

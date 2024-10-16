@@ -1,5 +1,7 @@
-#include "simple.h"
+#include "list.h"
+#include <assert.h>
 #include <stdlib.h>
+
 int length(struct node *head) {
   int count = 0;
   // head != NULL
@@ -26,6 +28,7 @@ truct node *BuildOneTwoThree() {
   third->data = 3;
   third->next = NULL;}
 */
+
 int Count(struct node *head, int value) {
   int count = 0;
   while (head) {
@@ -37,6 +40,7 @@ int Count(struct node *head, int value) {
 
   return count;
 }
+
 struct node *BuildOneTwoThree() {
   struct node *head = malloc(sizeof(struct node));
   head->data = 1;
@@ -49,4 +53,19 @@ struct node *BuildOneTwoThree() {
   head->next->next->next = NULL;
 
   return head;
+}
+
+int GetNth(struct node *head, int idx) {
+  // assert(head);
+  // assert(0 <= idx < length(head));
+  while (idx) {
+    head = head->next;
+    idx--;
+  }
+  return head->data;
+}
+void DeleteList(struct node **head) {
+  struct node *current = *head;
+  while (current) {
+  }
 }

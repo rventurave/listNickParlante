@@ -1,11 +1,11 @@
-testList: main.o simple.o
-	gcc -g -o testList main.o simple.o
+testList: main.o list.o
+	gcc -g -o testList main.o list.o
 
-main.o: main.c simple.o
+main.o: main.c list.o
 	gcc -c -g main.c 
 
-simple.o: simple.c simple.h
-	gcc -c -g simple.c
+list.o: list.c list.h
+	gcc -c -g list.c
 
 clean:
 	rm -rf *.o testList
