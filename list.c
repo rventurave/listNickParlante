@@ -1,6 +1,7 @@
 #include "list.h"
 #include <assert.h>
 #include <stdlib.h>
+#include <strings.h>
 
 int length(struct node *head) {
   int count = 0;
@@ -65,7 +66,32 @@ int GetNth(struct node *head, int idx) {
   return head->data;
 }
 void DeleteList(struct node **head) {
-  struct node *current = *head;
+  struct node *current;
   while (current) {
+    current = *head;
+    *head = (*head)->next;
+    free(current);
   }
+}
+int pop(struct node **head) {
+  assert(*head);
+  struct node *current = *head;
+  int data = current->data;
+  *head = (*head)->next;
+  free(current);
+  return data;
+}
+void InsertNth(struct node **headRef, int index, int data) {
+  assert(index > length(*headRef));
+  struct node *newNode = malloc(sizeof(struct node));
+  newNode->data = data;
+  newNode->next = NULL;
+
+  struct node *current = *headRef;
+  while (index != 1) {
+    index--;
+    current = current->next;
+  }
+  newNode->next = current->next;
+  current->next = newNode;
 }
