@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <strings.h>
+#include <time.h>
 
 int length(struct node *head) {
   int count = 0;
@@ -12,6 +13,29 @@ int length(struct node *head) {
   }
   return count;
 }
+
+void Push(struct node **headRef, int data) {
+  struct node *newNode = malloc(sizeof(struct node));
+  newNode->data = data;
+  newNode->next = *headRef; // The '*' to dereferences back to the real head
+  *headRef = newNode;       // ditto
+}
+
+struct node *BuildWithSpecialCase() {
+  struct node *head = NULL;
+  struct node *tail;
+  int i;
+  // Deal with the head node here, and set the tail pointer
+  Push(&head, 1);
+  tail = head;
+  // Do all the other nodes using 'tail'
+  for (i = 2; i < 6; i++) {
+    Push(&(tail->next), i); // add node at tail->next
+    tail = tail->next;      // advance tail to point to last node
+  }
+  return (head); // head == {1, 2, 3, 4, 5};
+}
+
 /*
 truct node *BuildOneTwoThree() {
   struct node *head = NULL;
@@ -65,6 +89,7 @@ int GetNth(struct node *head, int idx) {
   }
   return head->data;
 }
+
 void DeleteList(struct node **head) {
   struct node *current;
   while (current) {
@@ -73,6 +98,7 @@ void DeleteList(struct node **head) {
     free(current);
   }
 }
+
 int pop(struct node **head) {
   assert(*head);
   struct node *current = *head;
@@ -81,17 +107,39 @@ int pop(struct node **head) {
   free(current);
   return data;
 }
+
 void InsertNth(struct node **headRef, int index, int data) {
-  assert(index > length(*headRef));
+  assert(index >= length(*headRef));
   struct node *newNode = malloc(sizeof(struct node));
   newNode->data = data;
   newNode->next = NULL;
+
+  if (index == 0 && *headRef == NULL) {
+    newNode->next = *headRef;
+    *headRef = newNode;
+    return;
+  }
 
   struct node *current = *headRef;
   while (index != 1) {
     index--;
     current = current->next;
   }
+
   newNode->next = current->next;
   current->next = newNode;
 }
+void SortedInsert(struct node **headRef, struct node *newNode) {
+  if (*headRef == NULL || (*headRef)->data >= newNode->data) {
+    newNode->next = *headRef;
+    *headRef = newNode;
+    return;
+  }
+  struct node *current = *headRef;
+  while (current->next != NULL && current->next->data < newNode->data) {
+    current = current->next;
+  }
+  newNode->next = current->next;
+  current->next = newNode;
+}
+void InsertSort(struct node **headRef) {}
